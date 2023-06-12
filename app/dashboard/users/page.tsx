@@ -1,8 +1,7 @@
-import React from "react";
-import style from "./user.module.css";
+import React from 'react'
 
-function Users() {
-  return <div>User line</div>;
+export default function Page() {
+  return (
+    <div>Page</div>
+  )
 }
-
-export default Users;

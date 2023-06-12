@@ -3,7 +3,6 @@ import "../styles/globals.css";
 import { Inter } from "next/font/google";
 import Darkmode from "@/components/DarkMode";
 import Header from "@/components/Header";
-import Widget from "@/components/front-end/Wiget";
 import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -19,12 +18,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning={true}>
-      <body className={`${inter.className} `} suppressHydrationWarning={true}>
+    <html lang="en">
+      <body className={`${inter.className}`}>
         <main>
           <Header />
           {children}
-          <Widget />
           <Footer />
         </main>
       </body>

@@ -1,350 +1,371 @@
 "use client";
+
 import React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import TemporaryDrawer from "./front-end/CartDrawer";
-import { Badge, Drawer, Link } from "@mui/material";
-import { homeRoute } from "@/routes";
+import {
+  Navbar,
+  Collapse,
+  Typography,
+  Button,
+  IconButton,
+  List,
+  ListItem,
+  Menu,
+  MenuHandler,
+  MenuList,
+  MenuItem,
+  Chip,
+  Input,
+} from "@material-tailwind/react";
+import {
+  ChevronDownIcon,
+  ChevronRightIcon,
+  UserCircleIcon,
+  CubeTransparentIcon,
+  Bars3Icon,
+  XMarkIcon,
+  FlagIcon,
+  ChatBubbleOvalLeftIcon,
+  UsersIcon,
+  FolderIcon,
+  Square3Stack3DIcon,
+  RocketLaunchIcon,
+  FaceSmileIcon,
+  PuzzlePieceIcon,
+  GiftIcon,
+  Cog6ToothIcon,
+  BellIcon,
+} from "@heroicons/react/24/outline";
+import { BsFillPersonFill, BsFillGridFill } from "react-icons/bs";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import { TbMathGreater } from "react-icons/tb";
 
-const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const colors = {
+  blue: "bg-blue-50 text-blue-500",
+  orange: "bg-orange-50 text-orange-500",
+  green: "bg-green-50 text-green-500",
+  "blue-gray": "bg-blue-gray-50 text-blue-gray-500",
+  purple: "bg-purple-50 text-purple-500",
+  teal: "bg-teal-50 text-teal-500",
+  cyan: "bg-cyan-50 text-cyan-500",
+  pink: "bg-pink-50 text-pink-500",
+};
 
-export default function Header() {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
+const navListMenuItems = [
+  {
+    color: "blue",
+    icon: FlagIcon,
+    title: "About us",
+    description: "Learn about our story and our mission statement.",
+  },
+  {
+    color: "orange",
+    icon: ChatBubbleOvalLeftIcon,
+    title: "Press",
+    description: "News and writings, press releases, and resources",
+  },
+  {
+    color: "green",
+    icon: UsersIcon,
+    title: (
+      <div className="flex items-center gap-1">
+        Careers{" "}
+        <Chip
+          size="sm"
+          color="green"
+          variant="ghost"
+          value="We're hiring!"
+          className="capitalize"
+        />
+      </div>
+    ),
+    description: "We are always looking for talented people. Join us!",
+  },
+  {
+    color: "blue-gray",
+    icon: FolderIcon,
+    title: "Legal",
+    description: "All the stuff that we dan from legal made us add.",
+  },
+  {
+    color: "purple",
+    icon: RocketLaunchIcon,
+    title: "Products",
+    description: "Checkout our products that helps a startup running.",
+  },
+  {
+    color: "teal",
+    icon: FaceSmileIcon,
+    title: "Icons",
+    description: "Set of beautiful icons that you can use in your project.",
+  },
+  {
+    color: "cyan",
+    icon: PuzzlePieceIcon,
+    title: "UI Kits",
+    description: "High quality UI Kits helps you to 2x faster.",
+  },
+  {
+    color: "pink",
+    icon: GiftIcon,
+    title: "Open Source",
+    description: "List of all our open-source projects, it's all free.",
+  },
+];
+
+function NavListMenu() {
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+
+  const renderItems = navListMenuItems.map(
+    ({ icon, title, description, color }, key) => (
+      <a href="#" key={key}>
+        <MenuItem className="flex items-center gap-3 ">
+          <div className={` p-5`}>
+            {React.createElement(icon, {
+              strokeWidth: 2,
+              className: "h-6 w-6",
+            })}
+          </div>
+          <div>
+            <Typography
+              variant="h6"
+              color="blue-gray"
+              className="flex items-center text-sm"
+            >
+              {title}
+            </Typography>
+            <Typography variant="small" color="gray" className="font-normal">
+              {description}
+            </Typography>
+          </div>
+        </MenuItem>
+      </a>
+    )
   );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
-  const [state, setState] = React.useState(false);
-
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-
-  interface menuItemMap {
-    title: string;
-    path: string;
-    icon: string;
-    // children: [
-    //   {
-    //     title: string;
-    //     path: string;
-    //     icon: string;
-    //   }
-    // ];
-  }
 
   return (
-    <AppBar position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+    <React.Fragment>
+      <Menu
+        open={isMenuOpen}
+        handler={setIsMenuOpen}
+        offset={{ mainAxis: 20 }}
+        placement="bottom"
+        allowHover={true}
+      >
+        <MenuHandler>
+          <Typography as="div" variant="small" className="font-normal">
+            <ListItem
+              className="flex items-center gap-2 py-2 pr-4"
+              selected={isMenuOpen || isMobileMenuOpen}
+              onClick={() => setIsMobileMenuOpen((cur) => !cur)}
+            >
+              <Square3Stack3DIcon className="h-[18px] w-[18px]" />
+              Resources
+              <ChevronDownIcon
+                strokeWidth={2.5}
+                className={`hidden h-3 w-3 transition-transform lg:block ${
+                  isMenuOpen ? "rotate-180" : ""
+                }`}
+              />
+              <ChevronDownIcon
+                strokeWidth={2.5}
+                className={`block h-3 w-3 transition-transform lg:hidden ${
+                  isMobileMenuOpen ? "rotate-180" : ""
+                }`}
+              />
+            </ListItem>
+          </Typography>
+        </MenuHandler>
+        <MenuList className="hidden max-w-screen-xl lg:block">
+          <ul className="grid grid-cols-4 gap-y-2">{renderItems}</ul>
+        </MenuList>
+      </Menu>
+      <div className="block lg:hidden">
+        <Collapse open={isMobileMenuOpen}>{renderItems}</Collapse>
+      </div>
+    </React.Fragment>
+  );
+}
+
+function NavList() {
+  return (
+    <List className="mt-4 mb-6 p-0 lg:mt-0 lg:mb-0 lg:flex-row lg:p-1">
+      <Typography
+        as="a"
+        href="#"
+        variant="small"
+        color="blue-gray"
+        className="font-normal"
+      >
+        <ListItem className="flex items-center gap-2 py-2 pr-4">
+          <CubeTransparentIcon className="h-[18px] w-[18px]" />
+          Blocks
+        </ListItem>
+      </Typography>
+      <NavListMenu />
+      <Typography
+        as="a"
+        href="#"
+        variant="small"
+        color="blue-gray"
+        className="font-normal"
+      >
+        <ListItem className="flex items-center gap-2 py-2 pr-4">
+          <UserCircleIcon className="h-[18px] w-[18px]" />
+          Account
+        </ListItem>
+      </Typography>
+    </List>
+  );
+}
+
+export default function Header() {
+  const [openNav, setOpenNav] = React.useState(false);
+  const [openCat, setOpenCat] = React.useState(false);
+
+  React.useEffect(() => {
+    window.addEventListener(
+      "resize",
+      () => window.innerWidth >= 960 && setOpenNav(false)
+    );
+  }, []);
+
+  return (
+    <section>
+      <div className="flex container mx-auto md:px-3 my-3 align-item justify-between  text-gray-600">
+        <div className="basis-1/4">
           <Typography
+            as="a"
+            href="#"
             variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
+            className="mr-4 ml-2 cursor-pointer py-1.5"
           >
-            LOGO
+            Logo
           </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
-            >
-              {homeRoute.map((page: any, idx: any) => (
-                <MenuItem key={idx} itemRef={page.path}>
-                  <Typography textAlign="center">
-                    <Link href={page.path}> ss{page.title}</Link>
-                  </Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
+        </div>
+        <div className="relative flex gap-2 basis-1/2">
+          <Input
+            type="search"
+            label="Type here..."
+            className="pr-20"
+            containerProps={{
+              className: "min-w-[88px]",
             }}
-          >
-            LOGO
-          </Typography>
-          <Box
-            className="justify-center"
-            sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}
-          >
-            {homeRoute.map((page: any, idx: any) => (
-              <MenuItem
-                key={idx}
-                itemRef={page.path}
-                sx={{ my: 2, color: "black", display: "block" }}
+          />
+          <Button size="sm" className="!absolute right-1 top-1">
+            Search
+          </Button>
+        </div>
+        <div className="basis-1/4  text-right">
+          <IconButton variant="text" color="blue-gray" className="me-2">
+            <AiOutlineShoppingCart className="h-10 w-10 bg-blue-gray-100 rounded-full p-2" />
+          </IconButton>
+          <IconButton variant="text" color="blue-gray">
+            <BsFillPersonFill className="h-10 w-10 bg-blue-gray-100 rounded-full p-2" />
+          </IconButton>
+        </div>
+      </div>
+
+      <Navbar className="sticky inset-0 z-10  max-w-full rounded-none">
+        <div className="flex mx-auto container items-center justify-between text-blue-gray-900">
+          {/* category */}
+          <Menu>
+            <MenuHandler>
+              <Button
+                size="sm"
+                variant="text"
+                className="bg-blue-gray-100 flex items-center  gap-3 text-base font-normal capitalize tracking-normal w-52"
               >
-                <Typography textAlign="center">
-                  <Link href={page.path} className="text-white md:text-white">
-                    {page.title}
-                  </Link>
-                </Typography>
+                <BsFillGridFill className="h-3.5 w-3.5 transition-transform " />
+                <span>Categories</span>
+                <ChevronDownIcon
+                  strokeWidth={2.5}
+                  className={`h-3.5 w-3.5 transition-transform float-right  ${
+                    openCat ? "rotate-180" : ""
+                  }`}
+                />
+              </Button>
+            </MenuHandler>
+
+            <MenuList>
+              <MenuItem className="flex align-item">
+                <CubeTransparentIcon className="h-[18px] w-[18px] me-2" />
+                <span>Menu Item 66</span>
               </MenuItem>
-            ))}
-          </Box>
-          {/* cart option */}
-          <Box sx={{ flexGrow: 0, rowGap: 10 }}>
-            <Tooltip title="Open settings">
-              <IconButton
-                aria-label="cart"
-                onClick={() => setState(!state)}
-                sx={{ p: 0 }}
-              >
-                <Badge badgeContent={4} color="success">
-                  {/* <MailIcon color="action" /> */}
-                  <ShoppingCartIcon />
-                </Badge>
-              </IconButton>
-            </Tooltip>
+              <MenuItem className="flex align-item">
+                <CubeTransparentIcon className="h-[18px] w-[18px] me-2" />
+                <span>Menu Item 66</span>
+              </MenuItem>
 
-            <Drawer
-              anchor="right"
-              sx={{ width: 500 }}
-              open={state}
-              onClose={() => setState(!state)}
-            >
-              <Typography textAlign="center">
-                asdfasdfasdf adsfasdfasdf 
-              </Typography>
-            </Drawer>
-          </Box>
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
+              <Menu placement="right-start" offset={15}>
+                <MenuHandler>
+                  <MenuItem className="flex align-item justify-between">
+                    <CubeTransparentIcon className="h-[18px] w-[18px]" />
+                    <span>Nested menu</span>
+                    <ChevronRightIcon
+                      strokeWidth={2.5}
+                      className={`h-3.5 w-3.5 transition-transform `}
+                    />
+                  </MenuItem>
+                </MenuHandler>
+                <MenuList>
+                  <div className="w-60 h-100 mt-0">
+                    <MenuItem>Nested Item 1</MenuItem>
+                    <MenuItem>Nested Item 2</MenuItem>
+                    <MenuItem>Nested Item 3</MenuItem>
+                    <MenuItem>Nested Item 3</MenuItem>
+                    <MenuItem>Nested Item 3</MenuItem>
+                    <MenuItem>Nested Item 3</MenuItem>
+                  </div>
+                </MenuList>
+              </Menu>
 
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={() => handleCloseUserMenu()}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={() => handleCloseUserMenu()}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
-    // <nav className="relative bg-white border-b-2 border-gray-200 dark:bg-gray-900 dark:border-gray-700">
-    //   <div className="container max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3">
-    //     <Link href="#" className="flex items-center">
-    //       <Image
-    //         src="https://flowbite.com/docs/images/logo.svg"
-    //         alt="Flowbite Logo"
-    //         height={50}
-    //         width={50}
-    //       />
-    //     </Link>
+              <MenuItem className="flex align-item">
+                <CubeTransparentIcon className="h-[18px] w-[18px] me-2" />
+                <span>Menu Item 66</span>
+              </MenuItem>
+            </MenuList>
+          </Menu>
+          {/* category */}
 
-    //     <button
-    //       data-collapse-toggle="navbar-dropdown"
-    //       type="button"
-    //       className="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-    //       aria-controls="navbar-dropdown"
-    //       aria-expanded="false"
-    //       onClick={() => setMobileMenu(!mobileMenu)}
-    //     >
-    //       <span className="sr-only">Open main menu</span>
-    //       <svg
-    //         className="w-6 h-6"
-    //         aria-hidden="true"
-    //         fill="currentColor"
-    //         viewBox="0 0 20 20"
-    //         xmlns="http://www.w3.org/2000/svg"
-    //       >
-    //         <path
-    //           fillRule="evenodd"
-    //           d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-    //           clipRule="evenodd"
-    //         ></path>
-    //       </svg>
-    //     </button>
-    //     <div
-    //       className={`${mobileMenu ? "" : "hidden"}  w-full md:block md:w-auto`}
-    //       id="navbar-dropdown"
-    //     >
-    //       <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-    //         {homeRoute.map((item, idx) => {
-    //           if (item.children) {
-    //             return (
-    //               <li key={idx}>
-    //                 <button
-    //                   id="dropdownNavbarLink"
-    //                   data-dropdown-toggle="dropdownNavbar"
-    //                   onClick={() => setMenuOpen(!isMenuOpen)}
-    //                   className="relative flex items-center justify-between w-full py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
-    //                 >
-    //                   {item.title}
-    //                   <svg
-    //                     className="w-5 h-5 ml-1"
-    //                     aria-hidden="true"
-    //                     fill="currentColor"
-    //                     viewBox="0 0 20 20"
-    //                     xmlns="http://www.w3.org/2000/svg"
-    //                   >
-    //                     <path
-    //                       fillRule="evenodd"
-    //                       d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-    //                       clipRule="evenodd"
-    //                     ></path>
-    //                   </svg>
-    //                 </button>
-    //                 {isMenuOpen && (
-    //                   <div
-    //                     id="dropdownNavbar"
-    //                     className="z-10 absolute  font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
-    //                   >
-    //                     <ul
-    //                       className="py-2 text-sm text-gray-700 dark:text-gray-400"
-    //                       aria-labelledby="dropdownLargeButton"
-    //                     >
-    //                       {item.children.map((item, idx) => {
-    //                         return (
-    //                           <li key={idx}>
-    //                             <Link
-    //                               href={`${item.path}`}
-    //                               className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-    //                             >
-    //                               {item.title}
-    //                             </Link>
-    //                           </li>
-    //                         );
-    //                       })}
-    //                     </ul>
-    //                   </div>
-    //                 )}
-    //               </li>
-    //             );
-    //           } else {
-    //             return (
-    //               <li key={idx}>
-    //                 <Link
-    //                   href={`
+          <div className="hidden lg:block">
+            <NavList />
+          </div>
 
-    //                   ${item.path}`}
-    //                   className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent"
-    //                   aria-current="page"
-    //                 >
-    //                   {item.title}
-    //                 </Link>
-    //               </li>
-    //             );
-    //           }
-    //         })}
+          <div className="hidden gap-2 lg:flex">
+            <Button variant="text" size="sm" color="blue-gray">
+              Sign In
+            </Button>
+            <Button variant="gradient" size="sm">
+              Sign Up
+            </Button>
+          </div>
 
-    //         <li>
-    //           <Link
-    //             href="/login"
-    //             className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-    //           >
-    //             Login
-    //           </Link>
-    //         </li>
-    //         <li>
-    //           <Link
-    //             href="/signup"
-    //             className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-    //           >
-    //             Signup
-    //           </Link>
-    //         </li>
-    //       </ul>
-    //     </div>
-    //   </div>
-    //   <div className="fixed right-0 bottom-0 m-4">
-    //     <Darkmode />
-    //   </div>
-    // </nav>
+          <IconButton
+            variant="text"
+            color="blue-gray"
+            className="lg:hidden"
+            onClick={() => setOpenNav(!openNav)}
+          >
+            {openNav ? (
+              <XMarkIcon className="h-6 w-6" strokeWidth={2} />
+            ) : (
+              <Bars3Icon className="h-6 w-6" strokeWidth={2} />
+            )}
+          </IconButton>
+        </div>
+        <Collapse open={openNav}>
+          <NavList />
+          <div className="flex w-full flex-nowrap items-center gap-2 lg:hidden">
+            <Button variant="outlined" size="sm" color="blue-gray" fullWidth>
+              Sign In
+            </Button>
+            <Button variant="gradient" size="sm" fullWidth>
+              Sign Up
+            </Button>
+          </div>
+        </Collapse>
+      </Navbar>
+    </section>
   );
 }
