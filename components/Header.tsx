@@ -15,6 +15,8 @@ import {
   MenuItem,
   Chip,
   Input,
+  Drawer,
+  Avatar,
 } from "@material-tailwind/react";
 import {
   ChevronDownIcon,
@@ -33,22 +35,15 @@ import {
   PuzzlePieceIcon,
   GiftIcon,
   Cog6ToothIcon,
+  LifebuoyIcon,
   BellIcon,
+  PowerIcon,
+  InboxArrowDownIcon,
 } from "@heroicons/react/24/outline";
 import { BsFillPersonFill, BsFillGridFill } from "react-icons/bs";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { TbMathGreater } from "react-icons/tb";
-
-const colors = {
-  blue: "bg-blue-50 text-blue-500",
-  orange: "bg-orange-50 text-orange-500",
-  green: "bg-green-50 text-green-500",
-  "blue-gray": "bg-blue-gray-50 text-blue-gray-500",
-  purple: "bg-purple-50 text-purple-500",
-  teal: "bg-teal-50 text-teal-500",
-  cyan: "bg-cyan-50 text-cyan-500",
-  pink: "bg-pink-50 text-pink-500",
-};
+import Image from "next/image";
 
 const navListMenuItems = [
   {
@@ -222,6 +217,7 @@ function NavList() {
 export default function Header() {
   const [openNav, setOpenNav] = React.useState(false);
   const [openCat, setOpenCat] = React.useState(false);
+  const [openRight, setOpenRight] = React.useState(false);
 
   React.useEffect(() => {
     window.addEventListener(
@@ -230,9 +226,11 @@ export default function Header() {
     );
   }, []);
 
+  const openDrawerRight = () => setOpenRight(true);
+  const closeDrawerRight = () => setOpenRight(false);
   return (
-    <section>
-      <div className="flex container mx-auto md:px-3 my-3 align-item justify-between  text-gray-600">
+    <>
+      <div className="flex w-full max-w-7xl px-8 mx-auto md:px-3 my-3 align-item justify-between text-gray-600">
         <div className="basis-1/4">
           <Typography
             as="a"
@@ -258,23 +256,70 @@ export default function Header() {
         </div>
         <div className="basis-1/4  text-right">
           <IconButton variant="text" color="blue-gray" className="me-2">
-            <AiOutlineShoppingCart className="h-10 w-10 bg-blue-gray-100 rounded-full p-2" />
+            <AiOutlineShoppingCart
+              onClick={() => openDrawerRight()}
+              className="h-10 w-10 bg-blue-gray-100 rounded-full p-2"
+            />
           </IconButton>
           <IconButton variant="text" color="blue-gray">
-            <BsFillPersonFill className="h-10 w-10 bg-blue-gray-100 rounded-full p-2" />
+            {/* <BsFillPersonFill className="h-10 w-10 bg-blue-gray-100 rounded-full p-2" /> */}
+            <Menu>
+              <MenuHandler >
+                <Avatar
+                  // width={100}
+                  // height={100}
+                  alt="candice wu"
+                  className="bg-blue-gray-100 cursor-pointer rounded-full"
+                  src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
+                />
+              </MenuHandler>
+              <MenuList>
+                <MenuItem className="flex items-center gap-2">
+                  <UserCircleIcon strokeWidth={2} className="h-4 w-4" />
+                  <Typography variant="small" className="font-normal">
+                    My Profile
+                  </Typography>
+                </MenuItem>
+                <MenuItem className="flex items-center gap-2">
+                  <Cog6ToothIcon strokeWidth={2} className="h-4 w-4" />
+                  <Typography variant="small" className="font-normal">
+                    Edit Profile
+                  </Typography>
+                </MenuItem>
+                <MenuItem className="flex items-center gap-2">
+                  <InboxArrowDownIcon strokeWidth={2} className="h-4 w-4" />
+                  <Typography variant="small" className="font-normal">
+                    Inbox
+                  </Typography>
+                </MenuItem>
+                <MenuItem className="flex items-center gap-2">
+                  <LifebuoyIcon strokeWidth={2} className="h-4 w-4" />
+                  <Typography variant="small" className="font-normal">
+                    Help
+                  </Typography>
+                </MenuItem>
+                <hr className="my-2 border-blue-gray-50" />
+                <MenuItem className="flex items-center gap-2 ">
+                  <PowerIcon strokeWidth={2} className="h-4 w-4" />
+                  <Typography variant="small" className="font-normal">
+                    Sign Out
+                  </Typography>
+                </MenuItem>
+              </MenuList>
+            </Menu>
           </IconButton>
         </div>
       </div>
 
       <Navbar className="sticky inset-0 z-10  max-w-full rounded-none">
-        <div className="flex mx-auto container items-center justify-between text-blue-gray-900">
+        <div className="flex w-full max-w-7xl px-8 mx-auto md:px-3 align-item justify-between text-gray-600">
           {/* category */}
           <Menu>
             <MenuHandler>
               <Button
                 size="sm"
                 variant="text"
-                className="bg-blue-gray-100 flex items-center  gap-3 text-base font-normal capitalize tracking-normal w-52"
+                className="bg-blue-gray-100 flex items-center gap-3 text-base font-normal capitalize tracking-normal w-52"
               >
                 <BsFillGridFill className="h-3.5 w-3.5 transition-transform " />
                 <span>Categories</span>
@@ -287,7 +332,7 @@ export default function Header() {
               </Button>
             </MenuHandler>
 
-            <MenuList>
+            <MenuList className="w-60">
               <MenuItem className="flex align-item">
                 <CubeTransparentIcon className="h-[18px] w-[18px] me-2" />
                 <span>Menu Item 66</span>
@@ -299,12 +344,12 @@ export default function Header() {
 
               <Menu placement="right-start" offset={15}>
                 <MenuHandler>
-                  <MenuItem className="flex align-item justify-between">
+                  <MenuItem className="flex align-item">
                     <CubeTransparentIcon className="h-[18px] w-[18px]" />
                     <span>Nested menu</span>
                     <ChevronRightIcon
                       strokeWidth={2.5}
-                      className={`h-3.5 w-3.5 transition-transform `}
+                      className="h-3.5 w-3.5 transition-transform justify-self-end"
                     />
                   </MenuItem>
                 </MenuHandler>
@@ -366,6 +411,26 @@ export default function Header() {
           </div>
         </Collapse>
       </Navbar>
-    </section>
+
+      <Drawer
+        placement="right"
+        open={openRight}
+        onClose={() => closeDrawerRight()}
+        className="p-4"
+      >
+        <div className="mb-6 flex items-center justify-between">
+          <Typography variant="h5" color="blue-gray">
+            Drawer on Right
+          </Typography>
+          <IconButton
+            variant="text"
+            color="blue-gray"
+            onClick={closeDrawerRight}
+          >
+            <XMarkIcon strokeWidth={2} className="h-5 w-5" />
+          </IconButton>
+        </div>
+      </Drawer>
+    </>
   );
 }

@@ -8,10 +8,11 @@ import Banner from "@/components/front-end/Banner";
 export default function Home() {
   return (
     <Suspense fallback={<Loading />}>
-      <div className="mx-auto container">
+      <section className="bg-black">
         <Banner />
-        <ShopPage />
-      </div>
+      </section>
+
+      <ShopPage />
     </Suspense>
   );
 }
