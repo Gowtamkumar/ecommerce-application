@@ -1,0 +1,68 @@
+export const products = [
+  {
+    id: 1,
+    name: "product 1",
+    qty: 10,
+    color: "red",
+    price: 300,
+    description: "loremlkjlsadfjlasdk f lsadfjlaskdjf",
+  },
+  {
+    id: 2,
+    name: "product 1",
+    qty: 10,
+    color: "red",
+    price: 300,
+    description: "loremlkjlsadfjlasdk f lsadfjlaskdjf",
+  },
+  {
+    id: 3,
+    name: "product 1",
+    qty: 10,
+    color: "red",
+    price: 300,
+    description: "loremlkjlsadfjlasdk f lsadfjlaskdjf",
+  },
+  {
+    id: 4,
+    name: "product 1",
+    qty: 10,
+    color: "red",
+    price: 300,
+    description: "loremlkjlsadfjlasdk f lsadfjlaskdjf",
+  },
+  {
+    id: 5,
+    name: "product 1",
+    qty: 10,
+    color: "red",
+    price: 300,
+    description: "loremlkjlsadfjlasdk f lsadfjlaskdjf",
+  },
+
+  {
+    id: 6,
+    name: "product 1",
+    qty: 10,
+    color: "red",
+    price: 300,
+    description: "loremlkjlsadfjlasdk f lsadfjlaskdjf",
+  },
+  {
+    id: 7,
+    name: "product 1",
+    qty: 10,
+    color: "red",
+    price: 300,
+    description: "loremlkjlsadfjlasdk f lsadfjlaskdjf",
+  },
+  {
+    id: 8,
+    name: "product 1",
+    qty: 10,
+    color: "red",
+    price: 300,
+    description: "loremlkjlsadfjlasdk f lsadfjlaskdjf",
+  },
+];
+

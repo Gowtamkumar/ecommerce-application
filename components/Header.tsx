@@ -17,6 +17,7 @@ import {
   Input,
   Drawer,
   Avatar,
+  Badge,
 } from "@material-tailwind/react";
 import {
   ChevronDownIcon,
@@ -41,6 +42,7 @@ import {
   InboxArrowDownIcon,
 } from "@heroicons/react/24/outline";
 import { BsFillPersonFill, BsFillGridFill } from "react-icons/bs";
+import { HomeIcon } from "@heroicons/react/24/solid";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { TbMathGreater } from "react-icons/tb";
 import Image from "next/image";
@@ -210,6 +212,43 @@ function NavList() {
           Account
         </ListItem>
       </Typography>
+
+      <Typography
+        as="a"
+        href="#"
+        variant="small"
+        color="blue-gray"
+        className="font-normal"
+      >
+        <ListItem className="flex items-center gap-2 py-2 pr-4">
+          <UserCircleIcon className="h-[18px] w-[18px]" />
+          Account
+        </ListItem>
+      </Typography>
+      <Typography
+        as="a"
+        href="#"
+        variant="small"
+        color="blue-gray"
+        className="font-normal"
+      >
+        <ListItem className="flex items-center gap-2 py-2 pr-4">
+          <UserCircleIcon className="h-[18px] w-[18px]" />
+          Account
+        </ListItem>
+      </Typography>
+      <Typography
+        as="a"
+        href="#"
+        variant="small"
+        color="blue-gray"
+        className="font-normal"
+      >
+        <ListItem className="flex items-center gap-2 py-2 pr-4">
+          <UserCircleIcon className="h-[18px] w-[18px]" />
+          Account
+        </ListItem>
+      </Typography>
     </List>
   );
 }
@@ -230,8 +269,8 @@ export default function Header() {
   const closeDrawerRight = () => setOpenRight(false);
   return (
     <>
-      <div className="flex w-full max-w-7xl px-8 mx-auto md:px-3 my-3 align-item justify-between text-gray-600">
-        <div className="basis-1/4">
+      <div className="flex align-item justify-between  max-w-7xl px-8 mx-auto md:px-3 my-3  text-gray-600">
+        <div className="md:basis-1/5  basis-1/3">
           <Typography
             as="a"
             href="#"
@@ -241,7 +280,7 @@ export default function Header() {
             Logo
           </Typography>
         </div>
-        <div className="relative flex gap-2 basis-1/2">
+        <div className="relative flex gap-2  md:basis-1/2">
           <Input
             type="search"
             label="Type here..."
@@ -254,22 +293,21 @@ export default function Header() {
             Search
           </Button>
         </div>
-        <div className="basis-1/4  text-right">
-          <IconButton variant="text" color="blue-gray" className="me-2">
-            <AiOutlineShoppingCart
-              onClick={() => openDrawerRight()}
-              className="h-10 w-10 bg-blue-gray-100 rounded-full p-2"
-            />
-          </IconButton>
-          <IconButton variant="text" color="blue-gray">
-            {/* <BsFillPersonFill className="h-10 w-10 bg-blue-gray-100 rounded-full p-2" /> */}
+
+        <div className="flex items-center gap-8">
+          <Badge content="5">
+            <IconButton className="rounded-full">
+              <AiOutlineShoppingCart className="h-4 w-4" />
+            </IconButton>
+          </Badge>
+          <Badge overlap="circular" placement="bottom-end">
             <Menu>
-              <MenuHandler >
+              <MenuHandler>
                 <Avatar
-                  // width={100}
-                  // height={100}
+                  // width={50}
+                  // height={50}
+                  className="cursor-pointer md:w-10 md:h-11 "
                   alt="candice wu"
-                  className="bg-blue-gray-100 cursor-pointer rounded-full"
                   src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
                 />
               </MenuHandler>
@@ -307,7 +345,7 @@ export default function Header() {
                 </MenuItem>
               </MenuList>
             </Menu>
-          </IconButton>
+          </Badge>
         </div>
       </div>
 
@@ -319,13 +357,16 @@ export default function Header() {
               <Button
                 size="sm"
                 variant="text"
-                className="bg-blue-gray-100 flex items-center gap-3 text-base font-normal capitalize tracking-normal w-52"
+                className="bg-blue-gray-100 flex items-center justify-between gap-3 text-base font-normal capitalize tracking-normal w-60"
               >
-                <BsFillGridFill className="h-3.5 w-3.5 transition-transform " />
-                <span>Categories</span>
+                <div className="flex items-center ">
+                  <BsFillGridFill className="transition-transform me-1" />
+                  <span>Categories</span>
+                </div>
+
                 <ChevronDownIcon
                   strokeWidth={2.5}
-                  className={`h-3.5 w-3.5 transition-transform float-right  ${
+                  className={`h-3.5 w-3.5 transition-transform   ${
                     openCat ? "rotate-180" : ""
                   }`}
                 />
@@ -344,9 +385,12 @@ export default function Header() {
 
               <Menu placement="right-start" offset={15}>
                 <MenuHandler>
-                  <MenuItem className="flex align-item">
-                    <CubeTransparentIcon className="h-[18px] w-[18px]" />
-                    <span>Nested menu</span>
+                  <MenuItem className="flex align-item justify-between">
+                    <div className="flex align-item ">
+                      <CubeTransparentIcon className="h-[18px] w-[18px] me-1" />
+                      <span>Nested menu</span>
+                    </div>
+
                     <ChevronRightIcon
                       strokeWidth={2.5}
                       className="h-3.5 w-3.5 transition-transform justify-self-end"
